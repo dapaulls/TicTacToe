@@ -9,6 +9,15 @@ namespace TicTacToe
 {
     class Game
     {
+        // Private Properties
+        private char[] board;
+        private char human;
+        private char computer;
+        private char player1 = 'X';
+        private char player2 = 'O';
+        private char empty = ' ';
+        int numSquares = 9;
+        
         // Public Properties
         public char[] Board
         {
@@ -41,19 +50,20 @@ namespace TicTacToe
             set { empty = value; }
         }
         
-        // Private Properties
-        private char[] board;
-        private char human;
-        private char computer;
-        private char player1 = 'X';
-        private char player2 = 'O';
-        private char empty = ' ';
-        int numSquares = 9;        
+                
 
         // Public Methods
         public void DisplayInstructions()
         {
-            Console.WriteLine("How to play...");
+            Console.WriteLine("How to play...\n");
+            Console.WriteLine("Get three counters in a row to win.");
+            Console.WriteLine("Make a move by entering a number 0-8.");
+            Console.WriteLine("The number corresponds to the squares on the board as so:\n");
+            Console.WriteLine(" 0 | 1 | 2");
+            Console.WriteLine("-----------");
+            Console.WriteLine(" 3 | 4 | 5");
+            Console.WriteLine("-----------");
+            Console.WriteLine(" 6 | 7 | 8");
         }
 
         public char AssignHumanPiece()
@@ -202,7 +212,7 @@ namespace TicTacToe
             ArrayList moves = new ArrayList();
             for (int i = 0; i < numSquares; i++)
             {
-                if (board[i] == ' ')
+                if (board[i] == empty)
                 {
                     moves.Add(i);
                 }

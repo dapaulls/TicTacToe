@@ -47,7 +47,7 @@ namespace TicTacToe
                 }
                 else
                 {
-                    Console.WriteLine("Ha!Ha! I won!");
+                    Console.WriteLine("Ha! Ha! I won!");
                 }
             }
             else
