@@ -43,18 +43,18 @@ namespace TicTacToe
             {
                 if (turn == computer)
                 {
-                    Console.WriteLine("Well done. You won!");
+                    Console.WriteLine("\nWell done. You won!");
                 }
                 else
                 {
-                    Console.WriteLine("Ha! Ha! I won!");
+                    Console.WriteLine("\nHa! Ha! I won!");
                 }
             }
             else
             {
-                Console.WriteLine("Its a tie!");
+                Console.WriteLine("\nIt's a tie!");
             }
-               
+
             Console.ReadLine();
         }
     }

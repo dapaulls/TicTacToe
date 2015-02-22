@@ -9,16 +9,20 @@ namespace TicTacToe
 {
     class Game
     {
-        // Private Properties
+        /*
+         * Properties & fields - There are 2 players (human & computer) and a board.
+         *                       The board has 9 squares.
+         *                       Each square can either be empty or contain an 'X' or an 'O'.
+         */
+        
         private char[] board;
         private char human;
         private char computer;
         private char player1 = 'X';
         private char player2 = 'O';
         private char empty = ' ';
-        int numSquares = 9;
+        int numSquares = 9;        
         
-        // Public Properties
         public char[] Board
         {
             get { return board; }
@@ -56,14 +60,14 @@ namespace TicTacToe
         public void DisplayInstructions()
         {
             Console.WriteLine("How to play...\n");
-            Console.WriteLine("Get three counters in a row to win.");
+            Console.WriteLine("Get three of your pieces in a row to win.");
             Console.WriteLine("Make a move by entering a number 0-8.");
-            Console.WriteLine("The number corresponds to the squares on the board as so:\n");
-            Console.WriteLine(" 0 | 1 | 2");
-            Console.WriteLine("-----------");
-            Console.WriteLine(" 3 | 4 | 5");
-            Console.WriteLine("-----------");
-            Console.WriteLine(" 6 | 7 | 8");
+            Console.WriteLine("The numbers correspond to the squares on the board as so:\n");
+            Console.WriteLine("\t 0 | 1 | 2");
+            Console.WriteLine("\t-----------");
+            Console.WriteLine("\t 3 | 4 | 5");
+            Console.WriteLine("\t-----------");
+            Console.WriteLine("\t 6 | 7 | 8");
         }
 
         public char AssignHumanPiece()
@@ -71,7 +75,7 @@ namespace TicTacToe
             string response = "";
             while (response != "y" && response != "n")
             {
-                Console.WriteLine("Do you want to go first? (y/n): ");
+                Console.Write("\nDo you want to go first? (y/n): ");
                 response = Console.ReadLine().ToLower();
             }
             if (response == "y")
@@ -115,11 +119,11 @@ namespace TicTacToe
         public void DisplayBoard(char[] board)        
         {
             Console.Clear();
-            Console.WriteLine(" " + board[0] + " | " + board[1] + " | " + board[2]);
-            Console.WriteLine("-----------");
-            Console.WriteLine(" " + board[3] + " | " + board[4] + " | " + board[5]);
-            Console.WriteLine("-----------");
-            Console.WriteLine(" " + board[6] + " | " + board[7] + " | " + board[8]);
+            Console.WriteLine("\n\t " + board[0] + " | " + board[1] + " | " + board[2]);
+            Console.WriteLine("\t-----------");
+            Console.WriteLine("\t " + board[3] + " | " + board[4] + " | " + board[5]);
+            Console.WriteLine("\t-----------");
+            Console.WriteLine("\t " + board[6] + " | " + board[7] + " | " + board[8]);
         }
 
         public int HumanMove(char[] board)
@@ -129,7 +133,7 @@ namespace TicTacToe
             bool response;
             do
             {
-                Console.WriteLine("Input your move (0-8): ");
+                Console.WriteLine("\nInput your move (0-8): ");
                 response = int.TryParse(Console.ReadLine(), out move);
             }
             while (!legalMoves.Contains(move) || !response);
@@ -139,11 +143,51 @@ namespace TicTacToe
         public int ComputerMove(char[] board)
         {
             ArrayList legalMoves = validMoves(board);
-            int move = -1;
-            for (int i = 0; i < legalMoves.Count; i++)
+            int move = -1;            
+            int[] bestMoves = { 4, 0, 2, 6, 8, 1, 3, 5, 7 };
+
+            char[] copyOfBoard = board;
+            // Check to see if the computer can win
+            foreach (int number in legalMoves)
             {
-                move = (int)legalMoves[i];                
+                copyOfBoard[number] = computer;
+                string message = CheckForWinner(copyOfBoard);
+                if (message == "winner")
+                {
+                    move = number;
+                    return move;
+                }
+                else
+                {
+                    copyOfBoard[number] = empty;
+                }
             }
+
+            // If the computer can't win, check to see if a human win can be blocked
+            foreach (int number in legalMoves)
+            {
+                copyOfBoard[number] = human;
+                string message = CheckForWinner(copyOfBoard);
+                if (message == "winner")
+                {
+                    move = number;
+                    return move;
+                }
+                else
+                {
+                    copyOfBoard[number] = empty;
+                }
+            }
+
+            // Otherwise play the next best move
+            foreach (int number in bestMoves)
+            {
+                if (legalMoves.Contains(number))
+                {
+                    move = number;
+                    return move;
+                }                
+            }            
             return move;     
         }
 
