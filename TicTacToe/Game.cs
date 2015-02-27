@@ -61,13 +61,13 @@ namespace TicTacToe
         {
             Console.WriteLine("How to play...\n");
             Console.WriteLine("Get three of your pieces in a row to win.");
-            Console.WriteLine("Make a move by entering a number 0-8.");
+            Console.WriteLine("Make a move by entering a number 1-9.");
             Console.WriteLine("The numbers correspond to the squares on the board as so:\n");
-            Console.WriteLine("\t 0 | 1 | 2");
+            Console.WriteLine("\t 1 | 2 | 3");
             Console.WriteLine("\t-----------");
-            Console.WriteLine("\t 3 | 4 | 5");
+            Console.WriteLine("\t 4 | 5 | 6");
             Console.WriteLine("\t-----------");
-            Console.WriteLine("\t 6 | 7 | 8");
+            Console.WriteLine("\t 7 | 8 | 9");
         }
 
         public char AssignHumanPiece()
@@ -133,11 +133,11 @@ namespace TicTacToe
             bool response;
             do
             {
-                Console.WriteLine("\nInput your move (0-8): ");
+                Console.WriteLine("\nInput your move (1-9): ");
                 response = int.TryParse(Console.ReadLine(), out move);
             }
-            while (!legalMoves.Contains(move) || !response);
-            return move;                        
+            while (!legalMoves.Contains(move - 1) || !response);
+            return move - 1;                        
         }
 
         public int ComputerMove(char[] board)
